@@ -55,7 +55,8 @@ build() {
     --enable-introspection \
     --disable-debug \
     --enable-shared \
-    --enable-static
+    --enable-static \
+	CFLAGS="-DGLIB_STATIC_COMPILATION"
   make
 }
 

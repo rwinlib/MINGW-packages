@@ -55,8 +55,10 @@ build() {
     --enable-static \
     --enable-shared \
     --enable-introspection \
-    --enable-relocations \
-    --with-included-loaders
+    --disable-relocations \
+    --with-included-loaders \
+    CFLAGS="-DGLIB_STATIC_COMPILATION" \
+    CPPFLAGS="-DGLIB_STATIC_COMPILATION"
   make
 }
 

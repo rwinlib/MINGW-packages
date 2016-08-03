@@ -38,7 +38,9 @@ prepare() {
   patch -p1 -i ${srcdir}/0004-fix-mkdtemp.mingw.patch
   patch -p1 -i ${srcdir}/0005-fix-setenv.mingw.patch
   patch -p1 -i ${srcdir}/0007-pkgconfig.mingw.patch
-
+  sed -i.bak s/mkstemp/blablabla/g configure.ac
+  sed -i.bak s/strtod/__strtod/g src/fcxml.c
+  sed -i.bak s/strtod/__strtod/g src/fcname.c
   autoreconf -fiv
 }
 

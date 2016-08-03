@@ -29,7 +29,10 @@ prepare() {
   cd "${srcdir}/${_realname}-${pkgver}"
 
   patch -p1 -i "${srcdir}/0005-hack-unixy-paths.patch"
-
+  
+  sed -i.bak s/mkstemp/blablbla/g configure.ac
+  sed -i.bak s/HAVE_STRTOK_R/DOESNOTEXIST_BLABLA/g rsvg-css.c  
+  sed -i.bak s/strtok_r/strtok_rwinlib/g rsvg-css.c 
   autoreconf -fi
 }
 
@@ -42,8 +45,8 @@ build() {
   mkdir -p doc/html
   cp -rf ../${_realname}-${pkgver}/doc/html/* doc/html
 
-  CXXFLAGS+=" -D_POSIX_SOURCE"
-  CFLAGS+=" -D_POSIX_SOURCE"
+  CXXFLAGS+=" -D_POSIX_SOURCE -DLIBXML_STATIC -DGLIB_STATIC_COMPILATION"
+  CFLAGS+=" -D_POSIX_SOURCE -DLIBXML_STATIC -DGLIB_STATIC_COMPILATION"
   ./configure \
     --prefix=${MINGW_PREFIX} \
     --build=${MINGW_CHOST} \

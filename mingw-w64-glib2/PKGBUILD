@@ -51,6 +51,10 @@ prepare() {
   patch -Np1 -i "${srcdir}"/0027-no_sys_if_nametoindex.patch
   patch -Np1 -i "${srcdir}"/0028-inode_directory.patch
 
+  sed -i.bak '/"glibintl.h"/a #define strtod __strtod' glib/gstrfuncs.c
+  sed -i.bak '/"gsrvtarget.h"/a VOID WINAPI DnsRecordListFree(PDNS_RECORD pRecordList,DNS_FREE_TYPE FreeType);' gio/gthreadedresolver.c
+  sed -i.bak '/"gsrvtarget.h"/a #undef DnsRecordListFree' gio/gthreadedresolver.c
+
   NOCONFIGURE=1 ./autogen.sh
 }
 
@@ -66,7 +70,7 @@ build() {
     --disable-static --enable-shared \
     --disable-libelf \
     --with-python=${MINGW_PREFIX}/bin/python.exe \
-    --with-threads=posix \
+    --with-threads=win32 \
     --with-xml-catalog=${MINGW_PREFIX}/etc/xml/catalog
   make
 
@@ -80,7 +84,7 @@ build() {
     --disable-shared --enable-static \
     --disable-libelf \
     --with-python=${MINGW_PREFIX}/bin/python.exe \
-    --with-threads=posix \
+    --with-threads=win32 \
     --with-xml-catalog=${MINGW_PREFIX}/etc/xml/catalog
   make
 }
